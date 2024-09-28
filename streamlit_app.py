@@ -28,7 +28,7 @@ else:
     pchip = PchipInterpolator(x, y)
     xnew = np.linspace(x.min(), x.max(), 300)  # More points for smooth curve
     ynew = pchip(xnew)
-if st.button('Submit'):
+    
     # Create Plotly figure
     fig = go.Figure()
 
