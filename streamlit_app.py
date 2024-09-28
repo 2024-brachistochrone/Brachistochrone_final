@@ -46,18 +46,29 @@ else:
             positions.append(start_pos)
 
         return positions
-    # Create Plotly figure
-    fig = go.Figure()
+   # Add the ball's trajectory
+    ball_x = np.linspace(0, len(labels) - 1, len(ball_positions))
+    fig.add_trace(go.Scatter(x=ball_x, y=pchip(ball_x), mode='markers', name='Ball Position', marker=dict(color='green', size=12)))
 
-    # Add the smooth curve
-    fig.add_trace(go.Scatter(x=xnew, y=ynew, mode='lines', name='Smooth Slope', line=dict(color='blue')))
-
-    # Add original data points
-    fig.add_trace(go.Scatter(x=x, y=y, mode='markers', name='Original Data Points', marker=dict(color='red', size=10)))
+    # Annotate total time taken
+    fig.add_annotation(
+        x=ball_x[-1],
+        y=pchip(ball_x)[-1],
+        text=f"Time taken: {total_time:.2f} s",
+        showarrow=True,
+        arrowhead=2,
+        ax=0,
+        ay=-40,
+        bgcolor="white",
+        bordercolor="black",
+        borderwidth=1,
+        borderpad=4,
+        font=dict(size=12)
+    )
 
     # Update layout
     fig.update_layout(
-        title='Smooth Slope with Original Data Points',
+        title='Smooth Slope with Original Data Points and Ball Simulation',
         xaxis_title='Height Segments',
         yaxis_title='Height (m)',
         xaxis=dict(tickvals=x, ticktext=labels),
