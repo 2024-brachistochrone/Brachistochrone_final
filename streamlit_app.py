@@ -28,47 +28,6 @@ else:
     pchip = PchipInterpolator(x, y)
     xnew = np.linspace(x.min(), x.max(), 300)  # More points for smooth curve
     ynew = pchip(xnew)
- # Get the positions of the ball
-    def simulate_ball_roll(start_pos, total_time, num_steps):
-    total_time = 3  # total time of the simulation
-    ball_positions = simulate_ball_roll(start_pos=0, total_time=total_time, num_steps=100)
-
-       # Simulate the ball's motion
-    def simulate_ball_roll(start_pos, total_time, num_steps):
-        g = 9.81  # gravity (m/s^2)
-        time_steps = np.linspace(0, total_time, num_steps)
-        positions = []
-        velocity = 0
-
-        for t in time_steps:
-            # Simplified physics: v = u + at; here, a is derived from the slope of the curve
-            idx = int(np.clip(start_pos + t * 0.1, 0, len(xnew) - 1))
-            slope = (ynew[min(idx + 1, len(ynew) - 1)] - ynew[max(idx - 1, 0)]) / (xnew[min(idx + 1, len(xnew) - 1)] - xnew[max(idx - 1, 0)])
-            acceleration = -g * slope  # negative because it's moving down
-            velocity += acceleration * (total_time / num_steps)
-            start_pos += velocity * (total_time / num_steps)
-            positions.append(start_pos)
-
-        return positions
-   # Add the ball's trajectory
-    ball_x = np.linspace(0, len(labels) - 1, len(ball_positions))
-    fig.add_trace(go.Scatter(x=ball_x, y=pchip(ball_x), mode='markers', name='Ball Position', marker=dict(color='green', size=12)))
-
-    # Annotate total time taken
-    fig.add_annotation(
-        x=ball_x[-1],
-        y=pchip(ball_x)[-1],
-        text=f"Time taken: {total_time:.2f} s",
-        showarrow=True,
-        arrowhead=2,
-        ax=0,
-        ay=-40,
-        bgcolor="white",
-        bordercolor="black",
-        borderwidth=1,
-        borderpad=4,
-        font=dict(size=12)
-    )
 
     # Update layout
     fig.update_layout(
