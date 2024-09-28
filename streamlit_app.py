@@ -13,7 +13,7 @@ L4 = st.slider("Height of fourth bar = ", min_value=1, max_value=100, value=20)
 L5 = st.slider("Height of fifth bar = ", min_value=1, max_value=100, value=10)
 
 # Ensure that L1 >= L2 >= L3 >= L4 >= L5
-if not (L1 >= L2 >= L3 >= L4 >= L5):
+if not (L1 > L2 > L3 > L4 > L5):
     st.error("Error: Heights must be in non-increasing order (L1 >= L2 >= L3 >= L4 >= L5).")
 else:
     # Heights in non-increasing order
