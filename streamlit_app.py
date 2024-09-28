@@ -28,6 +28,10 @@ else:
     pchip = PchipInterpolator(x, y)
     xnew = np.linspace(x.min(), x.max(), 300)  # More points for smooth curve
     ynew = pchip(xnew)
+ # Get the positions of the ball
+    
+    total_time = 3  # total time of the simulation
+    ball_positions = simulate_ball_roll(start_pos=0, total_time=total_time, num_steps=100)
 
        # Simulate the ball's motion
     def simulate_ball_roll(start_pos, total_time, num_steps):
