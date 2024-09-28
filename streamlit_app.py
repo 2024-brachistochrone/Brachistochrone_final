@@ -29,14 +29,24 @@ else:
     xnew = np.linspace(x.min(), x.max(), 300)  # More points for smooth curve
     ynew = pchip(xnew)
 
-    # Update layout
-    fig.update_layout(
-        title='Smooth Slope with Original Data Points and Ball Simulation',
-        xaxis_title='Height Segments',
-        yaxis_title='Height (m)',
-        xaxis=dict(tickvals=x, ticktext=labels),
-        showlegend=True
-    )
+    # Create Plotly figure
+fig = go.Figure()
 
-    # Display the Plotly figure in Streamlit
-    st.plotly_chart(fig)
+# Add the smooth curve
+fig.add_trace(go.Scatter(x=xnew, y=ynew, mode='lines', name='Smooth Slope', line=dict(color='blue')))
+
+# Add original data points
+fig.add_trace(go.Scatter(x=x, y=y, mode='markers', name='Original Data Points', marker=dict(color='red', size=10)))
+
+# Update layout
+fig.update_layout(
+    title='Smooth Slope with Original Data Points',
+    xaxis_title='Height Segments',
+    yaxis_title='Height (m)',
+    xaxis=dict(tickvals=x, ticktext=labels),
+    showlegend=True
+)
+
+# Display the Plotly figure in Streamlit
+st.plotly_chart(fig)
+
