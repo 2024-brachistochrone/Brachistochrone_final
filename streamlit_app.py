@@ -28,7 +28,24 @@ else:
     pchip = PchipInterpolator(x, y)
     xnew = np.linspace(x.min(), x.max(), 300)  # More points for smooth curve
     ynew = pchip(xnew)
-    
+
+       # Simulate the ball's motion
+    def simulate_ball_roll(start_pos, total_time, num_steps):
+        g = 9.81  # gravity (m/s^2)
+        time_steps = np.linspace(0, total_time, num_steps)
+        positions = []
+        velocity = 0
+
+        for t in time_steps:
+            # Simplified physics: v = u + at; here, a is derived from the slope of the curve
+            idx = int(np.clip(start_pos + t * 0.1, 0, len(xnew) - 1))
+            slope = (ynew[min(idx + 1, len(ynew) - 1)] - ynew[max(idx - 1, 0)]) / (xnew[min(idx + 1, len(xnew) - 1)] - xnew[max(idx - 1, 0)])
+            acceleration = -g * slope  # negative because it's moving down
+            velocity += acceleration * (total_time / num_steps)
+            start_pos += velocity * (total_time / num_steps)
+            positions.append(start_pos)
+
+        return positions
     # Create Plotly figure
     fig = go.Figure()
 
