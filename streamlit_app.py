@@ -29,6 +29,7 @@ else:
     xnew = np.linspace(x.min(), x.max(), 300)  # More points for smooth curve
     ynew = pchip(xnew)
 
+derivative_values = pchip.derivative()(xnew)
     # Create Plotly figure
 fig = go.Figure()
 
@@ -37,6 +38,8 @@ fig.add_trace(go.Scatter(x=xnew, y=ynew, mode='lines', name='Smooth Slope', line
 
 # Add original data points
 fig.add_trace(go.Scatter(x=x, y=y, mode='markers', name='Original Data Points', marker=dict(color='red', size=10)))
+
+fig.add_trace(go.Scatter(x=xnew, y=derivative_values, mode='lines', name='Derivative', line=dict(color='green', dash='dash')))
 
 # Update layout
 fig.update_layout(
