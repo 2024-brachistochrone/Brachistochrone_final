@@ -3,6 +3,7 @@ import numpy as np
 import plotly.graph_objects as go
 from scipy.interpolate import PchipInterpolator
 import math
+from scipy.integrate import quad
 st.title("Simulating a brachistochrone")
 g = 9.81
 
@@ -12,7 +13,7 @@ L3 = st.slider("Height of second bar = ", min_value=1, max_value=100, value=40)
 L4 = st.slider("Height of third bar = ", min_value=1, max_value=100, value=30)
 L5 = st.slider("Height of fourth bar = ", min_value=1, max_value=100, value=20)
 L6 = st.slider("Height of fifth bar = ", min_value=1, max_value=100, value=10)
-L7 = 0 
+L7 = 1
 
 # Ensure that L1 >= L2 >= L3 >= L4 >= L5
 if not (L1 >= L2 >= L3 >= L4 >= L5):
@@ -31,6 +32,8 @@ else:
     xnew = np.linspace(x.min(), x.max(), 300)  # More points for smooth curve
     ynew = pchip(xnew)
 
+    dx = xnew[1] - xnew[0]
+
     derivative_func = pchip.derivative()
     dy_dx = derivative_func(xnew)
     y1 = L1
@@ -40,6 +43,15 @@ else:
     c = np.sqrt(b)
     d = 2*g*(y1-ynew)
 
+    e = np.sqrt(d)
+    # Check for negative or zero values to avoid division by zero
+    f = np.where(e > 0, c / e, 0)  # Use 0 if e is not positive
+    h = f * dx
+# Calculate total time
+    total_time = np.sum(h)
+
+    # Display total time
+    st.metric("Total Time to Descend:", f"{total_time:.2f} seconds")
 
 # Create Plotly figure
 fig = go.Figure()
