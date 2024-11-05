@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from scipy.interpolate import PchipInterpolator
 import math
 from scipy.integrate import quad
-from scipy.integrate import trapz
+from numpy import trapz
 st.title("Simulating a brachistochrone")
 g = 9.81
 
