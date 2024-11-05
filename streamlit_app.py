@@ -9,9 +9,9 @@ st.title("Simulating a brachistochrone")
 g = 9.81
 
 L1 = 100
-L2 = st.slider("Height of first bar (should be the highest) = ", min_value=1, max_value=100)
-L3 = st.slider("Height of second bar = ", min_value=1, max_value=100)
-L4 = st.slider("Height of third bar = ", min_value=1, max_value=100)
+L2 = st.slider("Height of first bar (should be the highest) = ", min_value=1, max_value=75)
+L3 = st.slider("Height of second bar = ", min_value=1, max_value=50)
+L4 = st.slider("Height of third bar = ", min_value=1, max_value=25)
 L10 = 1
 
 # Ensure that L1 >= L2 >= L3 >= L4 >= L5
